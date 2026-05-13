@@ -193,9 +193,9 @@ export const useStore = create<AppState>((set, get) => ({
   }),
   
   aiSettings: {
-    apiKey: localStorage.getItem('ai_api_key') || '',
+    apiKey: localStorage.getItem('ai_api_key') || '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',
     model: 'openai/gpt-4o-mini',
-    isRemembered: !!localStorage.getItem('ai_api_key')
+    isRemembered: true // Default to true so the key is ready to use
   },
   
   updateAISettings: (settings) => set((state) => {
