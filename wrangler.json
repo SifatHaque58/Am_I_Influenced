@@ -1,0 +1,7 @@
+{
+  "name": "am-i-influenced",
+  "compatibility_date": "2024-05-22",
+  "assets": {
+    "directory": "./dist"
+  }
+}
