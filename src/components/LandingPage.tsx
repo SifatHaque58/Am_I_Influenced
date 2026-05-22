@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useStore } from '../store/useStore';
-import type { Category } from '../types';
+import type { Category, Gender } from '../types';
 import { Check } from 'lucide-react';
 
 const CATEGORIES: Category[] = [
@@ -16,8 +16,15 @@ const CATEGORIES: Category[] = [
   'General Lifestyle'
 ];
 
+const GENDERS: { label: string, value: Gender }[] = [
+  { label: 'Male', value: 'male' },
+  { label: 'Female', value: 'female' },
+  { label: 'Non-Binary', value: 'non-binary' },
+  { label: 'Prefer not to say', value: 'prefer-not-to-say' }
+];
+
 export const LandingPage: React.FC = () => {
-  const { selectedCategories, toggleCategory, startQuiz } = useStore();
+  const { selectedCategories, toggleCategory, startQuiz, gender, setGender } = useStore();
 
   const handleStart = () => {
     startQuiz();
@@ -41,6 +48,30 @@ export const LandingPage: React.FC = () => {
       </div>
 
       <div className="mb-10">
+        <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 text-center">
+          Demographics (Optional)
+        </h3>
+        <div className="flex flex-wrap gap-3 justify-center mb-10">
+          {GENDERS.map((g) => {
+            const isSelected = gender === g.value;
+            return (
+              <button
+                key={g.value || 'null'}
+                onClick={() => setGender(isSelected ? null : g.value)}
+                className={`
+                  flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+                  ${isSelected 
+                    ? 'bg-accent-blue/10 text-accent-blue ring-2 ring-accent-blue shadow-sm' 
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}
+                `}
+              >
+                {g.label}
+                {isSelected && <Check size={14} />}
+              </button>
+            );
+          })}
+        </div>
+
         <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 text-center">
           Select areas to analyze (optional)
         </h3>

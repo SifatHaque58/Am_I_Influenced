@@ -23,6 +23,10 @@ export type InfluenceDimension =
 
 export type QuestionType = 'multiple_choice' | 'scale' | 'yes_no' | 'ranking';
 
+export type Gender = 'male' | 'female' | 'non-binary' | 'prefer-not-to-say' | null;
+
+export type GenderRelevance = 'neutral' | 'male-primary' | 'female-primary';
+
 export interface AnswerOption {
   text: string;
   scores: Partial<Record<InfluenceDimension, number>>;
@@ -33,6 +37,7 @@ export interface BaseQuestion {
   category: Category | 'General';
   text: string;
   type: QuestionType;
+  genderRelevance?: GenderRelevance;
 }
 
 export interface MultipleChoiceQuestion extends BaseQuestion {
@@ -66,4 +71,10 @@ export interface DimensionScores {
   cultural: number;
   practical: number;
   independent: number;
+}
+
+export interface GenderProfile {
+  means: DimensionScores;
+  stdDevs: DimensionScores;
+  typicalDominant: InfluenceDimension[];
 }

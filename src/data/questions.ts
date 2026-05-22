@@ -7,6 +7,7 @@ export const questionBank: Question[] = [
     category: 'General',
     text: 'Which phrase sounds most like you when making a decision?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'I choose based on personal preference and practical needs.', scores: { practical: 3, independent: 3 } },
       { text: 'I notice what is trending but decide independently.', scores: { independent: 2, cultural: 1 } },
@@ -19,6 +20,7 @@ export const questionBank: Question[] = [
     category: 'General',
     text: 'Have you ever bought something mainly because you kept seeing it repeatedly?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { algorithmic: 3, advertising: 2, habitual: 1 },
     noScores: { independent: 2 }
   },
@@ -27,6 +29,7 @@ export const questionBank: Question[] = [
     category: 'General',
     text: 'How often do you feel pressure to upgrade your lifestyle (tech, car, home) after seeing others online?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Never',
     maxLabel: 'Very Often',
     scoresMapping: (val: number) => ({
@@ -41,6 +44,7 @@ export const questionBank: Question[] = [
     category: 'General',
     text: 'Do you feel a sense of belonging when you own the same items as your friends?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { peer: 3, social: 1 },
     noScores: { independent: 2 }
   },
@@ -49,6 +53,7 @@ export const questionBank: Question[] = [
     category: 'General',
     text: 'When choosing a travel destination or activity, what matters most?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'I have always wanted to go there for personal reasons.', scores: { independent: 3 } },
       { text: 'It looks amazing in photos and videos I have seen online.', scores: { algorithmic: 2, social: 2 } },
@@ -63,6 +68,7 @@ export const questionBank: Question[] = [
     category: 'Fashion',
     text: 'When you buy clothing, what usually inspires the purchase?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'I genuinely need it (e.g., replacing worn items).', scores: { practical: 4, independent: 1 } },
       { text: 'I saw someone wearing something similar in person.', scores: { peer: 2, social: 1 } },
@@ -76,6 +82,7 @@ export const questionBank: Question[] = [
     category: 'Fashion',
     text: 'How frequently do you buy clothes that you only wear once or twice?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Rarely/Never',
     maxLabel: 'Very Often',
     scoresMapping: (val: number) => ({
@@ -89,6 +96,7 @@ export const questionBank: Question[] = [
     category: 'Fashion',
     text: 'Do you ever hide or throw away clothes because they went "out of style" even if they are still good?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { cultural: 2, status: 2, insecurity: 1 },
     noScores: { practical: 3, independent: 2 }
   },
@@ -97,6 +105,7 @@ export const questionBank: Question[] = [
     category: 'Fashion',
     text: 'Are you loyal to certain clothing brands primarily because of the status they convey?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { status: 4, cultural: 1 },
     noScores: { practical: 2, independent: 2 }
   },
@@ -105,6 +114,7 @@ export const questionBank: Question[] = [
     category: 'Fashion',
     text: 'How much do fashion hauls on social media influence your urge to shop?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Not at all',
     maxLabel: 'A lot',
     scoresMapping: (val: number) => ({ algorithmic: val * 0.6, advertising: val * 0.4, independent: (10 - val) * 0.4 })
@@ -116,6 +126,7 @@ export const questionBank: Question[] = [
     category: 'Beauty / Makeup',
     text: 'How often do you buy beauty or grooming products after seeing them repeatedly in your feed?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Never',
     maxLabel: 'Very Often',
     scoresMapping: (val: number) => ({
@@ -129,6 +140,7 @@ export const questionBank: Question[] = [
     category: 'Beauty / Makeup',
     text: 'Why do you usually try a new skincare or makeup routine?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'To solve a specific issue I have (e.g., dry skin).', scores: { practical: 4, independent: 1 } },
       { text: 'A dermatologist or trusted professional recommended it.', scores: { practical: 2, cultural: 1 } },
@@ -141,6 +153,7 @@ export const questionBank: Question[] = [
     category: 'Beauty / Makeup',
     text: 'Do you feel less confident when you go without your usual beauty products, even around close friends?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { insecurity: 3, social: 2 },
     noScores: { independent: 3 }
   },
@@ -149,6 +162,7 @@ export const questionBank: Question[] = [
     category: 'Beauty / Makeup',
     text: 'Have you purchased "viral" beauty products that didn\'t actually suit you?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { algorithmic: 3, social: 2, habitual: 1 },
     noScores: { practical: 2 }
   },
@@ -159,6 +173,7 @@ export const questionBank: Question[] = [
     category: 'Shopping',
     text: 'When a store offers a "limited time" discount, how often do you buy something you didn\'t plan to?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Never',
     maxLabel: 'Always',
     scoresMapping: (val: number) => ({
@@ -172,6 +187,7 @@ export const questionBank: Question[] = [
     category: 'Shopping',
     text: 'Where do you discover most of the products you buy?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'Searching for them when I have a need.', scores: { practical: 4, independent: 2 } },
       { text: 'Social media ads and sponsored posts.', scores: { advertising: 3, algorithmic: 2 } },
@@ -184,6 +200,7 @@ export const questionBank: Question[] = [
     category: 'Shopping',
     text: 'Do you feel a sense of relief or temporary happiness immediately after clicking "Buy"?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { habitual: 3, insecurity: 1 },
     noScores: { practical: 2 }
   },
@@ -192,6 +209,7 @@ export const questionBank: Question[] = [
     category: 'Shopping',
     text: 'How often do you abandon a purchase because it didn\'t have enough positive reviews?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Rarely',
     maxLabel: 'Often',
     scoresMapping: (val: number) => ({ social: val * 0.5, practical: val * 0.3 })
@@ -203,6 +221,7 @@ export const questionBank: Question[] = [
     category: 'Food / Diet',
     text: 'When choosing what to eat, how often are your decisions affected by wellness trends or diet culture?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Never',
     maxLabel: 'Constantly',
     scoresMapping: (val: number) => ({
@@ -217,6 +236,7 @@ export const questionBank: Question[] = [
     category: 'Food / Diet',
     text: 'Have you ever gone to a specific restaurant mostly because it looks good for photos/social media?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { status: 3, social: 2, algorithmic: 1 },
     noScores: { practical: 2, independent: 1 }
   },
@@ -225,6 +245,7 @@ export const questionBank: Question[] = [
     category: 'Food / Diet',
     text: 'If your friends order healthy salads, are you likely to change your mind and order one too?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { peer: 4, insecurity: 1 },
     noScores: { independent: 4 }
   },
@@ -233,6 +254,7 @@ export const questionBank: Question[] = [
     category: 'Food / Diet',
     text: 'What drives your grocery shopping habits the most?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'Budget, meal planning, and basic needs.', scores: { practical: 4 } },
       { text: 'I buy what I crave in the moment.', scores: { independent: 2, habitual: 2 } },
@@ -247,6 +269,7 @@ export const questionBank: Question[] = [
     category: 'Books / Reading',
     text: 'How do you usually pick the next book you read?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'Browsing topics I am personally curious about.', scores: { independent: 4 } },
       { text: 'BookTok, Bookstagram, or other online book communities.', scores: { algorithmic: 3, social: 2 } },
@@ -259,6 +282,7 @@ export const questionBank: Question[] = [
     category: 'Books / Reading',
     text: 'Do you ever buy books to display them, even if you do not plan to read them immediately?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { status: 3, cultural: 2 },
     noScores: { practical: 3 }
   },
@@ -267,6 +291,7 @@ export const questionBank: Question[] = [
     category: 'Books / Reading',
     text: 'Does a popular book with a beautiful cover influence you to buy the physical copy instead of digital/audio?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Not at all',
     maxLabel: 'Absolutely',
     scoresMapping: (val: number) => ({ advertising: val * 0.4, status: val * 0.4, practical: (10 - val) * 0.4 })
@@ -276,6 +301,7 @@ export const questionBank: Question[] = [
     category: 'Books / Reading',
     text: 'If you dislike a widely praised book, do you doubt your own taste?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { insecurity: 4, social: 2 },
     noScores: { independent: 4 }
   },
@@ -286,6 +312,7 @@ export const questionBank: Question[] = [
     category: 'Fitness / Wellness',
     text: 'Why do you exercise or participate in wellness activities?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'To feel good, healthy, and energized.', scores: { practical: 3, independent: 3 } },
       { text: 'To achieve a body type I see glorified online.', scores: { insecurity: 4, cultural: 2 } },
@@ -298,6 +325,7 @@ export const questionBank: Question[] = [
     category: 'Fitness / Wellness',
     text: 'Have you purchased expensive workout gear mainly because it is the current "it" brand?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { status: 3, advertising: 2 },
     noScores: { practical: 3 }
   },
@@ -306,6 +334,7 @@ export const questionBank: Question[] = [
     category: 'Fitness / Wellness',
     text: 'How often do you track your health metrics (steps, sleep, calories) primarily because the app prompts you to?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Never',
     maxLabel: 'Constantly',
     scoresMapping: (val: number) => ({ habitual: val * 0.5, algorithmic: val * 0.5, independent: (10 - val) * 0.5 })
@@ -315,6 +344,7 @@ export const questionBank: Question[] = [
     category: 'Fitness / Wellness',
     text: 'Do you feel guilty if you miss a workout because you see others posting about theirs?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { insecurity: 3, social: 3 },
     noScores: { independent: 3 }
   },
@@ -325,6 +355,7 @@ export const questionBank: Question[] = [
     category: 'Entertainment',
     text: 'How do you decide which movies or TV shows to watch?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'I watch whatever the streaming platform recommends to me.', scores: { algorithmic: 4, habitual: 1 } },
       { text: 'I watch what everyone is talking about online so I do not miss out.', scores: { social: 3, peer: 2 } },
@@ -337,6 +368,7 @@ export const questionBank: Question[] = [
     category: 'Entertainment',
     text: 'Do you ever force yourself to finish a popular show you dislike just to be part of the cultural conversation?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { social: 3, peer: 2 },
     noScores: { independent: 3 }
   },
@@ -345,6 +377,7 @@ export const questionBank: Question[] = [
     category: 'Entertainment',
     text: 'How much do celebrity endorsements impact whether you listen to a specific artist or watch a movie?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Not at all',
     maxLabel: 'A lot',
     scoresMapping: (val: number) => ({ advertising: val * 0.5, status: val * 0.3, independent: (10 - val) * 0.4 })
@@ -354,6 +387,7 @@ export const questionBank: Question[] = [
     category: 'Entertainment',
     text: 'Have you ever started a hobby or game primarily because your favorite streamer/YouTuber played it?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { algorithmic: 2, advertising: 2, peer: 1 },
     noScores: { independent: 2 }
   },
@@ -364,6 +398,7 @@ export const questionBank: Question[] = [
     category: 'Social Media',
     text: 'When you open a social app, why are you usually doing it?',
     type: 'multiple_choice',
+    genderRelevance: 'neutral',
     options: [
       { text: 'Muscle memory; I do it without thinking.', scores: { habitual: 4 } },
       { text: 'I want to see what my friends are up to.', scores: { peer: 3 } },
@@ -376,6 +411,7 @@ export const questionBank: Question[] = [
     category: 'Social Media',
     text: 'Do you ever feel less confident about your own life after scrolling through your feed?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Never',
     maxLabel: 'Very Often',
     scoresMapping: (val: number) => ({ insecurity: val * 0.7, social: val * 0.4, independent: (10 - val) * 0.5 })
@@ -385,6 +421,7 @@ export const questionBank: Question[] = [
     category: 'Social Media',
     text: 'Have you ever deleted a post because it didn\'t get enough likes or engagement?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { insecurity: 3, status: 2, social: 2 },
     noScores: { independent: 3 }
   },
@@ -393,6 +430,7 @@ export const questionBank: Question[] = [
     category: 'Social Media',
     text: 'Do you curate your online persona to appear more successful, happy, or trendy than you feel?',
     type: 'scale',
+    genderRelevance: 'neutral',
     minLabel: 'Not at all',
     maxLabel: 'Extensively',
     scoresMapping: (val: number) => ({ status: val * 0.6, insecurity: val * 0.5, social: val * 0.3 })
@@ -402,6 +440,7 @@ export const questionBank: Question[] = [
     category: 'Social Media',
     text: 'Do you find yourself using phrases or slang just because you see them constantly on TikTok/Twitter/Reels?',
     type: 'yes_no',
+    genderRelevance: 'neutral',
     yesScores: { algorithmic: 3, habitual: 2, cultural: 1 },
     noScores: { independent: 2 }
   }
