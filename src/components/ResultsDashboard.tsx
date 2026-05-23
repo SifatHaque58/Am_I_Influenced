@@ -209,21 +209,21 @@ export const ResultsDashboard: React.FC = () => {
       const blob = await response.blob();
       const file = new File([blob], 'influence-profile.png', { type: 'image/png' });
       
-      if (navigator.share && navigator.canShare({ files: [file] })) {
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           files: [file],
           title: 'My Influence Profile',
           text: 'I just checked my influence profile on Am I Influenced! Check yours too.',
         });
       } else {
-        handleExport();
-        if (!navigator.share) {
-          alert('Sharing is not supported on this browser. Your result has been downloaded instead.');
-        }
+        alert('Sharing images directly is not supported on your current browser or device. Please use the "Save Image" button instead.');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Share failed:', err);
-      handleExport();
+      // Do not show an error if the user intentionally cancelled the share dialog
+      if (err.name !== 'AbortError') {
+        alert('Sharing failed. Please use the "Save Image" button instead.');
+      }
     }
   };
 
