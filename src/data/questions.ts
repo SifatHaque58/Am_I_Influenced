@@ -124,6 +124,20 @@ export const questionBank: Question[] = [
     type: 'binary',
     loads: { algorithmic: 1, advertising: 0.6, social: 0.5 }
   },
+  {
+    id: 'bty_dupe_pressure',
+    category: 'Beauty / Makeup',
+    text: 'How often do you buy a "dupe" of a luxury beauty product mainly because a creator insisted it was identical?',
+    type: 'graded',
+    loads: { algorithmic: 1, advertising: 0.8, practical: 0.5 }
+  },
+  {
+    id: 'bty_complex_routine',
+    category: 'Beauty / Makeup',
+    text: 'Do you feel pressured to maintain complex, multi-step routines (like 10-step skincare) because they seem like the standard online?',
+    type: 'binary',
+    loads: { social: 1, insecurity: 0.8, cultural: 0.6 }
+  },
 
   // ================= SHOPPING =================
   {
@@ -160,6 +174,20 @@ export const questionBank: Question[] = [
     type: 'graded',
     loads: { social: 1 }
   },
+  {
+    id: 'shp_livestream_hype',
+    category: 'Shopping',
+    text: 'Have you ever bought something during a livestream shopping event (like TikTok Shop or Instagram Live) just because of the hype?',
+    type: 'binary',
+    loads: { algorithmic: 1, advertising: 1, social: 0.5 }
+  },
+  {
+    id: 'shp_stress_buy',
+    category: 'Shopping',
+    text: 'How often do you make impulsive online purchases late at night to cope with stress or boredom?',
+    type: 'graded',
+    loads: { insecurity: 1, habitual: 0.8 }
+  },
 
   // ================= FOOD / DIET =================
   {
@@ -194,6 +222,20 @@ export const questionBank: Question[] = [
       { text: 'Price, nutrition, and a plan', loads: { practical: 2 } },
       { text: 'The same staples I always get', loads: { habitual: 2 } }
     ]
+  },
+  {
+    id: 'fd_superfood_hype',
+    category: 'Food / Diet',
+    text: 'Do you find yourself buying expensive "superfood" ingredients or supplements primarily because influencers claim they are life-changing?',
+    type: 'graded',
+    loads: { advertising: 1, status: 0.6, algorithmic: 0.6 }
+  },
+  {
+    id: 'fd_diet_peer_pressure',
+    category: 'Food / Diet',
+    text: 'Have you ever completely changed your diet (e.g., going vegan, keto, gluten-free) mostly because your social circle did?',
+    type: 'binary',
+    loads: { peer: 1, social: 0.8, cultural: 0.5 }
   },
 
   // ================= BOOKS / READING =================
@@ -231,6 +273,21 @@ export const questionBank: Question[] = [
     loads: { insecurity: 1, social: 0.6, independent: 0.6 },
     reverse: ['independent']
   },
+  {
+    id: 'bk_special_editions',
+    category: 'Books / Reading',
+    text: 'How often do you buy special editions or multiple copies of the same book just to display them on your shelf?',
+    type: 'graded',
+    loads: { status: 1, habitual: 0.5, social: 0.5 }
+  },
+  {
+    id: 'bk_force_genre',
+    category: 'Books / Reading',
+    text: 'Do you force yourself to read genres you do not actually enjoy just because they are currently dominating online discussions?',
+    type: 'binary',
+    loads: { social: 1, cultural: 0.6, independent: 0.6 },
+    reverse: ['independent']
+  },
 
   // ================= FITNESS / WELLNESS =================
   {
@@ -265,6 +322,20 @@ export const questionBank: Question[] = [
     text: 'Do you feel guilty if you miss a workout because you see others posting about theirs?',
     type: 'binary',
     loads: { insecurity: 1, social: 0.6, peer: 0.5 }
+  },
+  {
+    id: 'ft_sponsored_supplements',
+    category: 'Fitness / Wellness',
+    text: 'How often do you buy trendy wellness supplements (like greens powders) because they are heavily sponsored online?',
+    type: 'graded',
+    loads: { advertising: 1, algorithmic: 0.8, social: 0.5 }
+  },
+  {
+    id: 'ft_boutique_gym',
+    category: 'Fitness / Wellness',
+    text: 'Have you ever joined an expensive boutique gym or fitness class mostly because of the status associated with it?',
+    type: 'binary',
+    loads: { status: 1, social: 0.8, cultural: 0.5 }
   },
 
   // ================= ENTERTAINMENT =================
@@ -301,6 +372,20 @@ export const questionBank: Question[] = [
     text: 'Have you ever started a hobby or game primarily because your favorite streamer or YouTuber played it?',
     type: 'binary',
     loads: { advertising: 1, algorithmic: 0.6, social: 0.5 }
+  },
+  {
+    id: 'ent_sub_for_one_show',
+    category: 'Entertainment',
+    text: 'How often do you pay for a new streaming service subscription just to watch one specific show everyone is talking about?',
+    type: 'graded',
+    loads: { social: 1, cultural: 0.6, habitual: 0.5 }
+  },
+  {
+    id: 'ent_concert_for_content',
+    category: 'Entertainment',
+    text: 'Have you ever gone to a concert or live event mostly for the social media content, rather than for the performance itself?',
+    type: 'binary',
+    loads: { status: 1, social: 1, algorithmic: 0.5 }
   },
 
   // ================= SOCIAL MEDIA =================
