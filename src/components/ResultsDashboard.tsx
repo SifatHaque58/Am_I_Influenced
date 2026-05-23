@@ -304,10 +304,10 @@ export const ResultsDashboard: React.FC = () => {
                   {avgConfidence < 0.6 && unaskedQuestions.length >= 5 && (
                     <button 
                       onClick={improveConfidence}
-                      className="mt-3 flex items-center justify-center gap-2 w-full py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold transition-colors border border-indigo-200"
+                      className="mt-3 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 w-full p-3 sm:py-2 px-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl sm:rounded-lg text-xs sm:text-sm font-bold transition-colors border border-indigo-200 text-center leading-tight"
                     >
-                      <Target size={14} />
-                      Answer 5 more questions to improve accuracy
+                      <Target size={16} className="shrink-0" />
+                      <span>Answer 5 more to improve accuracy</span>
                     </button>
                   )}
                   {avgConfidence < 0.6 && unaskedQuestions.length < 5 && (

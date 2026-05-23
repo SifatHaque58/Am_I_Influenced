@@ -223,17 +223,17 @@ export const AIAnalysisCard: React.FC = () => {
             </ReactMarkdown>
           </div>
 
-          <div className="flex flex-wrap gap-3 mt-8">
+          <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <button
               onClick={handleCopyText}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 transition-colors shadow-sm"
+              className="flex items-center justify-center gap-2 px-4 py-3 sm:py-2 text-sm font-semibold rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 transition-colors shadow-sm w-full sm:w-auto"
             >
               {isCopied ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} />}
               {isCopied ? 'Copied!' : 'Copy Text'}
             </button>
             <button
               onClick={handleShareText}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-primary-50 border border-primary-100 text-primary-700 hover:bg-primary-100 hover:text-primary-800 transition-colors shadow-sm"
+              className="flex items-center justify-center gap-2 px-4 py-3 sm:py-2 text-sm font-semibold rounded-xl bg-primary-50 border border-primary-100 text-primary-700 hover:bg-primary-100 hover:text-primary-800 transition-colors shadow-sm w-full sm:w-auto"
             >
               <Share2 size={16} />
               Share Analysis
