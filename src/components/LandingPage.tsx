@@ -82,8 +82,10 @@ export const LandingPage: React.FC = () => {
             min="13"
             max="120"
           />
-          {age && parseInt(age, 10) < 13 && (
+          {age && parseInt(age, 10) < 13 ? (
             <p className="text-rose-500 text-xs mt-2 font-medium">You must be 13 or older.</p>
+          ) : (
+            <p className="text-slate-400 text-xs mt-2">If age is not provided, a general analysis will be generated.</p>
           )}
         </div>
 
