@@ -131,10 +131,19 @@ const SHUFFLE = <T>(array: T[]): T[] => {
 
 const selectInitialQuestions = (categories: Category[]): { initial: Question[], pool: Question[] } => {
   const generalPool = questionBank.filter(q => q.category === 'General');
-  const categoryPool = questionBank.filter(q => categories.includes(q.category as Category));
   
-  const poolToUse = categoryPool.length > 0 ? categoryPool : questionBank.filter(q => q.category !== 'General');
-  const allPool = SHUFFLE([...generalPool, ...poolToUse]);
+  let primaryPool: Question[] = [];
+  let fallbackPool: Question[] = [];
+  
+  if (categories.length > 0) {
+    primaryPool = questionBank.filter(q => q.category !== 'General' && categories.includes(q.category as Category));
+    fallbackPool = questionBank.filter(q => q.category !== 'General' && !categories.includes(q.category as Category));
+  } else {
+    primaryPool = questionBank.filter(q => q.category !== 'General');
+    fallbackPool = [];
+  }
+  
+  const allPool = [...SHUFFLE(generalPool), ...SHUFFLE(primaryPool), ...SHUFFLE(fallbackPool)];
   
   return {
     initial: allPool.slice(0, 5),
