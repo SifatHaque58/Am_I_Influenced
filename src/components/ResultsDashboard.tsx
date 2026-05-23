@@ -20,8 +20,8 @@ export const ResultsDashboard: React.FC = () => {
     INTERNAL_SPLIT: 0.35
   };
 
-  // 1. Normalize scores (0-100)
-  const normalizedScores: Record<string, number> = {};
+  // 1. Normalize scores (0-100), only for dims that have data
+  const normalizedScores: Record<string, number | null> = {};
   const externalInfluenceDims = ['social', 'algorithmic', 'advertising', 'peer', 'status', 'insecurity', 'habitual', 'cultural'];
   const internalInfluenceDims = ['practical', 'independent'];
   const allDims = [...externalInfluenceDims, ...internalInfluenceDims];
@@ -31,7 +31,8 @@ export const ResultsDashboard: React.FC = () => {
 
   allDims.forEach(dim => {
       const s = engineScores[dim as keyof typeof engineScores];
-      normalizedScores[dim] = s.mean !== null ? Math.round(s.mean * 100) : 0;
+      // Keep null if this dimension was never answered — don't substitute 0
+      normalizedScores[dim] = s.mean !== null ? Math.round(s.mean * 100) : null;
       if (s.count > 0) {
         totalConfidence += s.confidence;
         dimsWithConfidence++;
@@ -40,9 +41,16 @@ export const ResultsDashboard: React.FC = () => {
 
   const avgConfidence = dimsWithConfidence > 0 ? totalConfidence / dimsWithConfidence : 0;
 
-  // Calculate averages
-  const externalScore = externalInfluenceDims.reduce((acc, dim) => acc + normalizedScores[dim], 0) / externalInfluenceDims.length;
-  const internalScore = internalInfluenceDims.reduce((acc, dim) => acc + normalizedScores[dim], 0) / internalInfluenceDims.length;
+  // Calculate averages — only include dimensions that actually have data
+  const answeredExternalDims = externalInfluenceDims.filter(dim => normalizedScores[dim] !== null);
+  const answeredInternalDims = internalInfluenceDims.filter(dim => normalizedScores[dim] !== null);
+
+  const externalScore = answeredExternalDims.length > 0
+    ? answeredExternalDims.reduce((acc, dim) => acc + (normalizedScores[dim] as number), 0) / answeredExternalDims.length
+    : 50; // fallback to neutral if no external data at all
+  const internalScore = answeredInternalDims.length > 0
+    ? answeredInternalDims.reduce((acc, dim) => acc + (normalizedScores[dim] as number), 0) / answeredInternalDims.length
+    : 50; // fallback to neutral if no internal data at all
 
   // Score A: rawInfluenceScore
   const rawInfluenceScore = Math.round((externalScore * WEIGHTS.EXTERNAL_SPLIT) + ((100 - internalScore) * WEIGHTS.INTERNAL_SPLIT));
@@ -54,29 +62,38 @@ export const ResultsDashboard: React.FC = () => {
   if (gender === 'male' || gender === 'female') {
       const profile = PROFILES[gender];
       let sumPercentile = 0;
+      let percentileCount = 0;
 
-      // Only calculate percentile against external influence dimensions
+      // Only calculate percentile against external dims that were actually answered
       externalInfluenceDims.forEach(dim => {
-          const z = (normalizedScores[dim] - profile.means[dim as keyof typeof profile.means]) / profile.stdDevs[dim as keyof typeof profile.stdDevs];
-          // Normal CDF approximation
+          const score = normalizedScores[dim];
+          if (score === null) return; // skip unanswered dimensions
+          const z = (score - profile.means[dim as keyof typeof profile.means]) / profile.stdDevs[dim as keyof typeof profile.stdDevs];
           const t = 1 / (1 + 0.2316419 * Math.abs(z));
           const d = 0.3989423 * Math.exp(-z * z / 2);
           const prob = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
           const percentile = z > 0 ? (1 - prob) * 100 : prob * 100;
           sumPercentile += percentile;
+          percentileCount++;
       });
-      genderPercentile = Math.round(sumPercentile / externalInfluenceDims.length);
+      genderPercentile = percentileCount > 0 ? Math.round(sumPercentile / percentileCount) : null;
 
-      const dominantSum = profile.typicalDominant.reduce((acc, dim) => acc + normalizedScores[dim], 0);
-      resistanceScore = 100 - Math.round(dominantSum / profile.typicalDominant.length);
+      // Resistance: only include typicalDominant dims that were actually answered
+      const answeredDominant = profile.typicalDominant.filter(dim => normalizedScores[dim] !== null);
+      if (answeredDominant.length > 0) {
+        const dominantSum = answeredDominant.reduce((acc, dim) => acc + (normalizedScores[dim] as number), 0);
+        resistanceScore = 100 - Math.round(dominantSum / answeredDominant.length);
+      } else {
+        resistanceScore = 50; // neutral fallback
+      }
   } else {
-      // no gender, or non-binary
+      // no gender, or non-binary — use top 3 answered external dims
       const top3Dims = Object.entries(normalizedScores)
-          .filter(([dim]) => externalInfluenceDims.includes(dim))
-          .sort((a, b) => b[1] - a[1])
+          .filter(([dim, score]) => externalInfluenceDims.includes(dim) && score !== null)
+          .sort((a, b) => (b[1] as number) - (a[1] as number))
           .slice(0, 3)
-          .map(entry => entry[1]);
-      const top3Avg = top3Dims.reduce((a, b) => a + b, 0) / 3;
+          .map(entry => entry[1] as number);
+      const top3Avg = top3Dims.length > 0 ? top3Dims.reduce((a, b) => a + b, 0) / top3Dims.length : 50;
       resistanceScore = 100 - Math.round(top3Avg);
   }
 
@@ -147,9 +164,10 @@ export const ResultsDashboard: React.FC = () => {
 
   const chartData = allDims.map((dim) => {
       const dimName = dim as keyof typeof engineScores;
+      const score = normalizedScores[dimName];
       const dataPoint: any = {
           dimension: dim.charAt(0).toUpperCase() + dim.slice(1),
-          score: normalizedScores[dimName],
+          score: score !== null ? score : 0, // chart needs a number; unanswered dims show as 0
           fullMark: 100
       };
       if (showGenderAverage && (gender === 'male' || gender === 'female')) {
@@ -159,10 +177,10 @@ export const ResultsDashboard: React.FC = () => {
   });
 
   const topInfluences = Object.entries(normalizedScores)
-      .filter(([dim]) => externalInfluenceDims.includes(dim))
-      .sort((a, b) => b[1] - a[1])
+      .filter(([dim, score]) => externalInfluenceDims.includes(dim) && score !== null)
+      .sort((a, b) => (b[1] as number) - (a[1] as number))
       .slice(0, 3)
-      .map(([dim, score]) => ({ dimension: dim.charAt(0).toUpperCase() + dim.slice(1), score, fullMark: 100 }));
+      .map(([dim, score]) => ({ dimension: dim.charAt(0).toUpperCase() + dim.slice(1), score: score as number, fullMark: 100 }));
 
   const handleExport = async () => {
     if (!dashboardRef.current) return;
