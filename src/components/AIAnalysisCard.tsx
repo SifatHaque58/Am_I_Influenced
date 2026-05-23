@@ -38,11 +38,11 @@ export const AIAnalysisCard: React.FC = () => {
     setIsLoading(true);
     setError(null);
 
-    const normalizedScores: Record<string, number> = {};
+    const normalizedScores: Record<string, number | null> = {};
     const dims = ['social', 'algorithmic', 'advertising', 'peer', 'status', 'insecurity', 'habitual', 'cultural', 'practical', 'independent'];
     dims.forEach(dim => {
       const s = engineScores[dim as keyof typeof engineScores];
-      normalizedScores[dim] = s.mean !== null ? Math.round(s.mean * 100) : 0;
+      normalizedScores[dim] = s.mean !== null ? Math.round(s.mean * 100) : null;
     });
 
     const promptData = {

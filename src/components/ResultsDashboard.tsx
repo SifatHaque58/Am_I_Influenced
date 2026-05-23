@@ -3,7 +3,7 @@ import { useStore, PROFILES, DIMENSION_DESCRIPTIONS } from '../store/useStore';
 import { motion } from 'framer-motion';
 import { toPng } from 'html-to-image';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Download, RefreshCw, Target } from 'lucide-react';
+import { Download, RefreshCw, Target, Share2 } from 'lucide-react';
 import { AIAnalysisCard } from './AIAnalysisCard';
 
 export const ResultsDashboard: React.FC = () => {
@@ -301,7 +301,7 @@ export const ResultsDashboard: React.FC = () => {
                   <div className="text-xs text-slate-600 leading-relaxed mt-2 bg-white p-2 rounded border border-slate-100">
                     <p>{avgConfidence >= 0.6 ? "High confidence. Your responses were consistent." : "Low confidence. Your answers showed high variance or thin coverage."}</p>
                   </div>
-                  {avgConfidence < 0.6 && unaskedQuestions.length > 0 && (
+                  {avgConfidence < 0.6 && unaskedQuestions.length >= 5 && (
                     <button 
                       onClick={improveConfidence}
                       className="mt-3 flex items-center justify-center gap-2 w-full py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold transition-colors border border-indigo-200"
@@ -433,7 +433,7 @@ export const ResultsDashboard: React.FC = () => {
             onClick={handleShare}
             className="flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl sm:rounded-full font-medium transition-colors shadow-lg w-full sm:w-auto"
           >
-            <Download size={18} />
+            <Share2 size={18} />
             Share Result
           </button>
 

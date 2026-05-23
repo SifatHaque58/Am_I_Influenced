@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store/useStore';
 
 export const Questionnaire: React.FC = () => {
-  const { activeQuestions, currentQuestionIndex, answerQuestion } = useStore();
+  const { activeQuestions, currentQuestionIndex, answerQuestion, targetQuestionCount } = useStore();
   const currentQ = activeQuestions[currentQuestionIndex];
 
   if (!currentQ) return null;
 
-  const progress = ((currentQuestionIndex) / activeQuestions.length) * 100;
+  const progress = ((currentQuestionIndex + 1) / targetQuestionCount) * 100;
 
   return (
     <div className="w-full max-w-2xl mx-auto">

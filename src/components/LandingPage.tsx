@@ -12,8 +12,7 @@ const CATEGORIES: Category[] = [
   'Books / Reading',
   'Fitness / Wellness',
   'Entertainment',
-  'Social Media',
-  'General Lifestyle'
+  'Social Media'
 ];
 
 const GENDERS: { label: string, value: Gender }[] = [
