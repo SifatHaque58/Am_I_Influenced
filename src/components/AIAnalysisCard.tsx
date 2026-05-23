@@ -11,6 +11,7 @@ export const AIAnalysisCard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingMessageIdx, setLoadingMessageIdx] = useState(0);
+  const [analysisDepth, setAnalysisDepth] = useState<'short' | 'deep'>('short');
 
   const loadingMessages = [
     "Analyzing your behavior patterns...",
@@ -45,7 +46,8 @@ export const AIAnalysisCard: React.FC = () => {
     });
 
     const promptData = {
-      dimensionScores: normalizedScores
+      dimensionScores: normalizedScores,
+      analysisDepth
     };
 
     let attempts = 0;
@@ -107,28 +109,27 @@ export const AIAnalysisCard: React.FC = () => {
   return (
     <div className="mt-8">
       {!analysis && !isLoading && (
-        <div className="text-center flex flex-col items-center">
+        <div className="text-center flex flex-col items-center w-full">
           <motion.div
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.2, type: "spring", stiffness: 120, damping: 14 }}
-            className="relative mb-6 z-10"
+            transition={{ delay: 0.5, type: "spring", stiffness: 120, damping: 14 }}
+            className="w-full max-w-sm mb-6 z-10"
           >
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-              className="bg-slate-800 text-white px-5 py-2.5 rounded-2xl shadow-xl shadow-slate-200 flex items-center gap-2.5 relative"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue"></span>
-              </span>
-              <span className="text-xs font-bold tracking-wide">Ready for your deep dive?</span>
-              <ArrowDown size={14} className="text-slate-400" />
-              
-              {/* Sleek downward pointer triangle */}
-              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-slate-800 rotate-45 rounded-[2px]" />
-            </motion.div>
+            <div className="flex bg-slate-100/80 p-1.5 rounded-2xl shadow-inner border border-slate-200/60 backdrop-blur-sm">
+              <button
+                onClick={() => setAnalysisDepth('short')}
+                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${analysisDepth === 'short' ? 'bg-white text-primary-700 shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/5 scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
+              >
+                Short & Concise
+              </button>
+              <button
+                onClick={() => setAnalysisDepth('deep')}
+                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${analysisDepth === 'deep' ? 'bg-white text-primary-700 shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/5 scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
+              >
+                Deep Analysis
+              </button>
+            </div>
           </motion.div>
 
           <button
