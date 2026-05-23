@@ -72,16 +72,19 @@ export const LandingPage: React.FC = () => {
           })}
         </div>
 
-        <div className="flex justify-center mb-10">
+        <div className="flex flex-col items-center justify-center mb-10">
           <input 
             type="number"
             placeholder="Age"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            className="px-4 py-2 rounded-full border border-slate-200 text-sm font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary-500 w-28 text-center placeholder:text-slate-400 bg-slate-50 hover:bg-slate-100 transition-colors"
-            min="10"
+            className={`px-4 py-2 rounded-full border ${age && parseInt(age, 10) < 13 ? 'border-rose-300 ring-rose-100 bg-rose-50 text-rose-600' : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100'} text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 w-28 text-center placeholder:text-slate-400 transition-colors`}
+            min="13"
             max="120"
           />
+          {age && parseInt(age, 10) < 13 && (
+            <p className="text-rose-500 text-xs mt-2 font-medium">You must be 13 or older.</p>
+          )}
         </div>
 
         <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 text-center">
@@ -112,12 +115,13 @@ export const LandingPage: React.FC = () => {
       <div className="text-center">
         <button 
           onClick={handleStart}
-          className="bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-semibold py-4 px-10 rounded-full shadow-lg shadow-primary-500/30 transition-all duration-300 transform hover:scale-105 active:scale-95"
+          disabled={!!(age && parseInt(age, 10) < 13)}
+          className={`font-semibold py-4 px-10 rounded-full shadow-lg transition-all duration-300 transform ${age && parseInt(age, 10) < 13 ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none' : 'bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white shadow-primary-500/30 hover:scale-105 active:scale-95'}`}
         >
           Take the Quiz
         </button>
         <p className="mt-4 text-xs text-slate-400">
-          This tool is for self-reflection only and does not store your personal data.
+          This tool is for self-reflection only and does not store your personal data. Users must be 13 or older.
         </p>
       </div>
     </motion.div>
