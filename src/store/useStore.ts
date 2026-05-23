@@ -106,10 +106,12 @@ const calcScores = (obsRecord: Record<InfluenceDimension, Observation[]>): Engin
       variance = sumVar / sumW;
     }
     
-    const info = 1 - Math.exp(-sumW / 1.5);
-    // Max variance for values in [0,1] is 0.25 (opposite extremes, equal weight).
-    // Multiply by 4 so that max inconsistency maps to consistency=0.
-    const consistency = Math.max(0, 1 - 4 * variance);
+    const info = 1 - Math.exp(-sumW / 2.0);
+    // Variance penalty fades out as sample size increases (Law of Large Numbers).
+    // This allows confidence to correctly scale to 90%+ when many questions are answered, 
+    // even if the user has natural human variance.
+    const penalty = (4 * variance) * Math.exp(-sumW / 5.0);
+    const consistency = Math.max(0, 1 - penalty);
     const confidence = Math.max(0, Math.min(1, info * consistency));
     
     result[dim] = {
