@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../store/useStore';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, AlertCircle, FileText } from 'lucide-react';
+import { Sparkles, Loader2, AlertCircle, FileText, Copy, Share2, Check } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -12,6 +12,7 @@ export const AIAnalysisCard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loadingMessageIdx, setLoadingMessageIdx] = useState(0);
   const [analysisDepth, setAnalysisDepth] = useState<'short' | 'deep'>('short');
+  const [isCopied, setIsCopied] = useState(false);
 
   const loadingMessages = [
     "Analyzing your behavior patterns...",
@@ -108,6 +109,35 @@ export const AIAnalysisCard: React.FC = () => {
     setIsLoading(false);
   };
 
+  const handleCopyText = async () => {
+    if (!analysis) return;
+    try {
+      await navigator.clipboard.writeText(analysis);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text', err);
+    }
+  };
+
+  const handleShareText = async () => {
+    if (!analysis) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'My Influence Analysis',
+          text: analysis,
+        });
+      } catch (err: any) {
+        if (err.name !== 'AbortError') {
+           handleCopyText();
+        }
+      }
+    } else {
+      handleCopyText();
+    }
+  };
+
   return (
     <div className="mt-6 md:mt-8 px-2 sm:px-0">
       {!analysis && !isLoading && (
@@ -191,6 +221,23 @@ export const AIAnalysisCard: React.FC = () => {
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {analysis}
             </ReactMarkdown>
+          </div>
+
+          <div className="flex flex-wrap gap-3 mt-8">
+            <button
+              onClick={handleCopyText}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 transition-colors shadow-sm"
+            >
+              {isCopied ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} />}
+              {isCopied ? 'Copied!' : 'Copy Text'}
+            </button>
+            <button
+              onClick={handleShareText}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-primary-50 border border-primary-100 text-primary-700 hover:bg-primary-100 hover:text-primary-800 transition-colors shadow-sm"
+            >
+              <Share2 size={16} />
+              Share Analysis
+            </button>
           </div>
 
           <div className="mt-6 pt-5 border-t border-slate-100">
