@@ -135,17 +135,14 @@ const selectInitialQuestions = (categories: Category[]): { initial: Question[], 
   const generalPool = questionBank.filter(q => q.category === 'General');
   
   let primaryPool: Question[] = [];
-  let fallbackPool: Question[] = [];
   
   if (categories.length > 0) {
     primaryPool = questionBank.filter(q => q.category !== 'General' && categories.includes(q.category as Category));
-    fallbackPool = questionBank.filter(q => q.category !== 'General' && !categories.includes(q.category as Category));
   } else {
     primaryPool = questionBank.filter(q => q.category !== 'General');
-    fallbackPool = [];
   }
   
-  const allPool = [...SHUFFLE(generalPool), ...SHUFFLE(primaryPool), ...SHUFFLE(fallbackPool)];
+  const allPool = [...SHUFFLE(generalPool), ...SHUFFLE(primaryPool)];
   
   return {
     initial: allPool.slice(0, 5),
