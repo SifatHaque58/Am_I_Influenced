@@ -7,7 +7,7 @@ import { Download, RefreshCw, Target } from 'lucide-react';
 import { AIAnalysisCard } from './AIAnalysisCard';
 
 export const ResultsDashboard: React.FC = () => {
-  const { engineScores, gender, resetQuiz, activeQuestions, unaskedQuestions, improveConfidence } = useStore();
+  const { engineScores, gender, resetQuiz, activeQuestions, unaskedQuestions, improveConfidence, selectedCategories } = useStore();
   const dashboardRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [showGenderAverage, setShowGenderAverage] = useState(false);
@@ -291,6 +291,11 @@ export const ResultsDashboard: React.FC = () => {
                       <Target size={14} />
                       Answer 5 more questions to improve accuracy
                     </button>
+                  )}
+                  {avgConfidence < 0.6 && unaskedQuestions.length < 5 && (
+                    <p className="mt-3 text-[11px] text-amber-700 bg-amber-50 p-2 rounded-md border border-amber-200 leading-tight">
+                      We've run out of questions for your selected categories{selectedCategories.length > 0 ? ` (you only selected ${selectedCategories.length})` : ''}. To improve accuracy, try taking the quiz again with more categories.
+                    </p>
                   )}
                </div>
                {/* Card 1: Influence Load */}
