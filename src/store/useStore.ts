@@ -14,7 +14,7 @@ export const PROFILES: Record<'male' | 'female', GenderProfile> = {
       status: 14, insecurity: 12, habitual: 10, cultural: 10,
       practical: 10, independent: 12,
     },
-    typicalDominant: ['status', 'algorithmic', 'practical', 'independent']
+    typicalDominant: ['status', 'algorithmic', 'habitual', 'advertising']
   },
   female: {
     means: {
