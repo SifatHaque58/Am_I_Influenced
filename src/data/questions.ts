@@ -458,7 +458,7 @@ export const questionBank: Question[] = [
     text: 'Before buying something, I stop to think about whether I actually need it.',
     type: 'graded',
     loads: { practical: 1 }
-  }
+  },
   // === MORE FASHION ===
   { id: 'fash_more_1', category: 'Fashion', text: 'Have you ever avoided wearing an outfit because you felt it was "last season"?', type: 'binary', loads: { social: 1, status: 0.8, insecurity: 0.8 } },
   { id: 'fash_more_2', category: 'Fashion', text: 'How do you decide what to wear to an important event?', type: 'mc', options: [{ text: 'Check what influencers are wearing', loads: { algorithmic: 2, social: 1 } }, { text: 'Ask friends for advice', loads: { peer: 2, insecurity: 1 } }, { text: 'Wear something I know is prestigious', loads: { status: 2 } }, { text: 'Wear my favorite comfortable piece', loads: { independent: 2, practical: 1 } }] },
