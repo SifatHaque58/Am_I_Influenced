@@ -464,7 +464,7 @@ export const questionBank: Question[] = [
   { id: 'fash_more_2', category: 'Fashion', text: 'How do you decide what to wear to an important event?', type: 'mc', options: [{ text: 'Check what influencers are wearing', loads: { algorithmic: 2, social: 1 } }, { text: 'Ask friends for advice', loads: { peer: 2, insecurity: 1 } }, { text: 'Wear something I know is prestigious', loads: { status: 2 } }, { text: 'Wear my favorite comfortable piece', loads: { independent: 2, practical: 1 } }] },
   { id: 'fash_more_3', category: 'Fashion', text: 'Do you feel pressure to buy from sustainable brands because of social expectations?', type: 'graded', loads: { cultural: 1, social: 1, status: 0.5 } },
   { id: 'fash_more_4', category: 'Fashion', text: 'If a celebrity you admire wears a strange new style, do you start liking it?', type: 'binary', loads: { social: 1, algorithmic: 0.5 } },
-  { id: 'fash_more_5', category: 'Fashion', text: 'How often do you buy clothes just because they are heavily discounted, even if you do not need them?', type: 'graded', loads: { advertising: 1, practical: -1, habitual: 0.5 } },
+  { id: 'fash_more_5', category: 'Fashion', text: 'How often do you buy clothes just because they are heavily discounted, even if you do not need them?', type: 'graded', loads: { advertising: 1, practical: 0.8, habitual: 0.5 }, reverse: ['practical'] },
   
   // === MORE BEAUTY / MAKEUP ===
   { id: 'bty_more_1', category: 'Beauty / Makeup', text: 'Do you buy skincare products primarily because of TikTok/Instagram trends?', type: 'binary', loads: { algorithmic: 1, social: 0.8 } },

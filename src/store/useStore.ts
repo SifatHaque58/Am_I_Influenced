@@ -107,7 +107,9 @@ const calcScores = (obsRecord: Record<InfluenceDimension, Observation[]>): Engin
     }
     
     const info = 1 - Math.exp(-sumW / 1.5);
-    const consistency = Math.max(0, 1 - 2 * variance);
+    // Max variance for values in [0,1] is 0.25 (opposite extremes, equal weight).
+    // Multiply by 4 so that max inconsistency maps to consistency=0.
+    const consistency = Math.max(0, 1 - 4 * variance);
     const confidence = Math.max(0, Math.min(1, info * consistency));
     
     result[dim] = {
