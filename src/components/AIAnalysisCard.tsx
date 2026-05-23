@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export const AIAnalysisCard: React.FC = () => {
-  const { engineScores } = useStore();
+  const { engineScores, age } = useStore();
   const [analysis, setAnalysis] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +47,8 @@ export const AIAnalysisCard: React.FC = () => {
 
     const promptData = {
       dimensionScores: normalizedScores,
-      analysisDepth
+      analysisDepth,
+      age: age ? parseInt(age, 10) : null
     };
 
     let attempts = 0;

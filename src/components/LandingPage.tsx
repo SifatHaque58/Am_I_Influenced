@@ -24,7 +24,7 @@ const GENDERS: { label: string, value: Gender }[] = [
 ];
 
 export const LandingPage: React.FC = () => {
-  const { selectedCategories, toggleCategory, startQuiz, gender, setGender } = useStore();
+  const { selectedCategories, toggleCategory, startQuiz, gender, setGender, age, setAge } = useStore();
 
   const handleStart = () => {
     startQuiz();
@@ -70,6 +70,18 @@ export const LandingPage: React.FC = () => {
               </button>
             );
           })}
+        </div>
+
+        <div className="flex justify-center mb-10">
+          <input 
+            type="number"
+            placeholder="Age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            className="px-4 py-2 rounded-full border border-slate-200 text-sm font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary-500 w-28 text-center placeholder:text-slate-400 bg-slate-50 hover:bg-slate-100 transition-colors"
+            min="10"
+            max="120"
+          />
         </div>
 
         <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 text-center">

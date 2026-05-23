@@ -54,6 +54,8 @@ interface AppState {
   toggleCategory: (category: Category) => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
+  age: string;
+  setAge: (age: string) => void;
   startQuiz: () => void;
   
   // Quiz State
@@ -208,6 +210,9 @@ export const useStore = create<AppState>((set, get) => ({
   gender: null,
   setGender: (gender) => set({ gender }),
 
+  age: '',
+  setAge: (age) => set({ age }),
+
   currentQuestionIndex: 0,
   activeQuestions: [],
   unaskedQuestions: [],
@@ -314,7 +319,8 @@ export const useStore = create<AppState>((set, get) => ({
     isFinished: false,
     targetQuestionCount: 15,
     selectedCategories: [],
-    gender: null
+    gender: null,
+    age: ''
   }),
 
   improveConfidence: () => set((state) => {
