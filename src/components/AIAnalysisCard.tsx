@@ -108,7 +108,7 @@ export const AIAnalysisCard: React.FC = () => {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-6 md:mt-8 px-2 sm:px-0">
       {!analysis && !isLoading && (
         <div className="text-center flex flex-col items-center w-full">
           <motion.div
@@ -120,13 +120,13 @@ export const AIAnalysisCard: React.FC = () => {
             <div className="flex bg-slate-100/80 p-1.5 rounded-2xl shadow-inner border border-slate-200/60 backdrop-blur-sm">
               <button
                 onClick={() => setAnalysisDepth('short')}
-                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${analysisDepth === 'short' ? 'bg-white text-primary-700 shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/5 scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
+                className={`flex-1 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-300 ${analysisDepth === 'short' ? 'bg-white text-primary-700 shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/5 scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
               >
                 Short & Concise
               </button>
               <button
                 onClick={() => setAnalysisDepth('deep')}
-                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${analysisDepth === 'deep' ? 'bg-white text-primary-700 shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/5 scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
+                className={`flex-1 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-300 ${analysisDepth === 'deep' ? 'bg-white text-primary-700 shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-slate-900/5 scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'}`}
               >
                 Deep Analysis
               </button>
@@ -135,7 +135,7 @@ export const AIAnalysisCard: React.FC = () => {
 
           <button
             onClick={handleGenerate}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-600 to-accent-blue hover:from-primary-700 hover:to-accent-blue/80 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-primary-500/30 transition-transform transform hover:scale-105 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-accent-blue hover:from-primary-700 hover:to-accent-blue/80 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full shadow-lg shadow-primary-500/30 transition-transform transform hover:scale-105 active:scale-95 text-sm sm:text-base w-full sm:w-auto"
           >
             <Sparkles size={20} />
             Generate AI Analysis
@@ -170,23 +170,23 @@ export const AIAnalysisCard: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-8 bg-white p-8 md:p-10 rounded-3xl border border-slate-100 shadow-xl relative overflow-hidden"
+          className="mt-6 md:mt-8 bg-white p-5 sm:p-8 md:p-10 rounded-3xl border border-slate-100 shadow-xl relative overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-400 via-accent-blue to-accent-teal" />
           
-          <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-50">
+          <div className="flex items-center justify-between mb-6 sm:mb-8 pb-5 sm:pb-6 border-b border-slate-50">
             <div className="flex items-center gap-3">
-              <div className="bg-primary-50 p-2.5 rounded-xl text-primary-600">
-                <FileText size={24} />
+              <div className="bg-primary-50 p-2 sm:p-2.5 rounded-xl text-primary-600 shrink-0">
+                <FileText size={20} className="sm:w-6 sm:h-6" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-slate-800">Your Insight Report</h3>
-                <p className="text-sm text-slate-500 font-medium">AI-Powered Behavioral Analysis</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-800 leading-tight">Your Insight Report</h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium">AI-Powered Behavioral Analysis</p>
               </div>
             </div>
           </div>
 
-          <div className="markdown-content prose prose-slate max-w-none prose-headings:text-slate-800 prose-headings:font-bold prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600 prose-strong:text-primary-700 prose-strong:font-bold">
+          <div className="markdown-content prose prose-sm sm:prose-base prose-slate max-w-none prose-headings:text-slate-800 prose-headings:font-bold prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600 prose-strong:text-primary-700 prose-strong:font-bold prose-ul:pl-4 sm:prose-ul:pl-6 break-words">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {analysis}
             </ReactMarkdown>

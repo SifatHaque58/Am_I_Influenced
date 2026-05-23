@@ -55,7 +55,8 @@ export const ResultsDashboard: React.FC = () => {
       const profile = PROFILES[gender];
       let sumPercentile = 0;
 
-      allDims.forEach(dim => {
+      // Only calculate percentile against external influence dimensions
+      externalInfluenceDims.forEach(dim => {
           const z = (normalizedScores[dim] - profile.means[dim as keyof typeof profile.means]) / profile.stdDevs[dim as keyof typeof profile.stdDevs];
           // Normal CDF approximation
           const t = 1 / (1 + 0.2316419 * Math.abs(z));
@@ -64,13 +65,14 @@ export const ResultsDashboard: React.FC = () => {
           const percentile = z > 0 ? (1 - prob) * 100 : prob * 100;
           sumPercentile += percentile;
       });
-      genderPercentile = Math.round(sumPercentile / 10);
+      genderPercentile = Math.round(sumPercentile / externalInfluenceDims.length);
 
       const dominantSum = profile.typicalDominant.reduce((acc, dim) => acc + normalizedScores[dim], 0);
       resistanceScore = 100 - Math.round(dominantSum / profile.typicalDominant.length);
   } else {
       // no gender, or non-binary
       const top3Dims = Object.entries(normalizedScores)
+          .filter(([dim]) => externalInfluenceDims.includes(dim))
           .sort((a, b) => b[1] - a[1])
           .slice(0, 3)
           .map(entry => entry[1]);
@@ -226,22 +228,22 @@ export const ResultsDashboard: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-8">
+    <div className="w-full max-w-4xl mx-auto py-4 sm:py-8 px-4 sm:px-6">
       <motion.div 
         ref={dashboardRef}
         data-capture-container
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-10 shadow-xl border border-slate-100 mb-8"
+        className="bg-white/90 backdrop-blur-md rounded-3xl p-5 sm:p-6 md:p-10 shadow-xl border border-slate-100 mb-6 md:mb-8"
       >
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight mb-2">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight mb-2">
             Your Influence Profile
           </h2>
-          <p className="text-slate-500">Based on {activeQuestions.length} responses</p>
+          <p className="text-sm sm:text-base text-slate-500">Based on {activeQuestions.length} responses</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center mb-10 md:mb-12">
           {/* Metrics Column */}
           <div className="flex flex-col gap-6">
             <div className="bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border border-primary-100 shadow-sm text-center flex flex-col items-center">
@@ -365,9 +367,9 @@ export const ResultsDashboard: React.FC = () => {
                  </label>
               </div>
             )}
-            <div className="h-64 w-full focus:outline-none" style={{ outline: 'none' }}>
+            <div className="h-60 sm:h-64 md:h-72 w-full focus:outline-none" style={{ outline: 'none' }}>
               <ResponsiveContainer width="100%" height="100%" className="focus:outline-none" style={{ outline: 'none' }}>
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData} style={{ outline: 'none' }}>
+                <RadarChart cx="50%" cy="50%" outerRadius={window.innerWidth < 640 ? "70%" : "80%"} data={chartData} style={{ outline: 'none' }}>
                   <PolarGrid stroke="#e2e8f0" />
                   <PolarAngleAxis dataKey="dimension" tick={{ fill: '#64748b', fontSize: 11 }} />
                   <Radar name="You" dataKey="score" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.4} />
@@ -383,12 +385,12 @@ export const ResultsDashboard: React.FC = () => {
         </div>
 
         {/* Top Influences */}
-        <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 mb-8">
-          <h3 className="text-lg font-bold text-slate-800 mb-4">Your Strongest Influences</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-slate-50 rounded-2xl p-5 md:p-6 border border-slate-100 mb-4 md:mb-8">
+          <h3 className="text-base md:text-lg font-bold text-slate-800 mb-4 text-center sm:text-left">Your Strongest Influences</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
             {topInfluences.map((inf, idx) => (
               <div key={idx} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex flex-col">
-                <span className="text-sm font-bold text-primary-600 uppercase tracking-wide mb-1">
+                <span className="text-xs md:text-sm font-bold text-primary-600 uppercase tracking-wide mb-2">
                   {inf.dimension}
                 </span>
                 <div className="w-full bg-slate-100 rounded-full h-1.5 mt-auto">
@@ -402,11 +404,11 @@ export const ResultsDashboard: React.FC = () => {
       </motion.div>
 
       {/* AI & Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-8">
-        <div className="flex flex-wrap gap-3">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-stretch sm:items-center mb-6 md:mb-8 px-2 sm:px-0">
+        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <button
             onClick={handleShare}
-            className="flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-medium transition-colors shadow-lg"
+            className="flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl sm:rounded-full font-medium transition-colors shadow-lg w-full sm:w-auto"
           >
             <Download size={18} />
             Share Result
@@ -415,7 +417,7 @@ export const ResultsDashboard: React.FC = () => {
           <button
             onClick={handleExport}
             disabled={isExporting}
-            className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-full font-medium transition-colors"
+            className="flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl sm:rounded-full font-medium transition-colors w-full sm:w-auto"
           >
             <Download size={18} />
             {isExporting ? 'Exporting...' : 'Save Image'}
@@ -424,7 +426,7 @@ export const ResultsDashboard: React.FC = () => {
 
         <button
           onClick={resetQuiz}
-          className="flex items-center gap-2 px-5 py-2.5 text-slate-500 hover:text-slate-800 font-medium transition-colors"
+          className="flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 text-slate-500 hover:text-slate-800 font-medium transition-colors w-full sm:w-auto bg-slate-100 sm:bg-transparent rounded-xl sm:rounded-none"
         >
           <RefreshCw size={18} />
           Retake Quiz
