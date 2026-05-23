@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../store/useStore';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, AlertCircle, FileText, ArrowDown } from 'lucide-react';
+import { Sparkles, Loader2, AlertCircle, FileText } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
