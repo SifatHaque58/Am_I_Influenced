@@ -122,7 +122,13 @@ export const LandingPage: React.FC = () => {
           Take the Quiz
         </button>
         <p className="mt-4 text-xs text-slate-400">
-          This tool is for self-reflection only and does not store your personal data. Users must be 13 or older.
+          This tool is for self-reflection only and does not store your personal data. Users must be 13 or older.{' '}
+          <button 
+            onClick={() => useStore.getState().setPrivacyOpen(true)}
+            className="underline hover:text-slate-600 transition-colors"
+          >
+            Privacy Policy
+          </button>
         </p>
       </div>
     </motion.div>

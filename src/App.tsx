@@ -2,6 +2,7 @@ import { useStore } from './store/useStore';
 import { LandingPage } from './components/LandingPage';
 import { Questionnaire } from './components/Questionnaire';
 import { ResultsDashboard } from './components/ResultsDashboard';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 
 function App() {
   const { activeQuestions, isFinished } = useStore();
@@ -22,6 +23,8 @@ function App() {
         {isQuizActive && <Questionnaire />}
         {isFinished && <ResultsDashboard />}
       </div>
+
+      <PrivacyPolicy />
     </div>
   );
 }

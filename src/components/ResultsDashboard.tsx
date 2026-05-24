@@ -457,6 +457,15 @@ export const ResultsDashboard: React.FC = () => {
       </div>
 
       <AIAnalysisCard />
+
+      <div className="mt-12 text-center pb-8">
+        <button 
+          onClick={() => useStore.getState().setPrivacyOpen(true)}
+          className="text-xs text-slate-400 underline hover:text-slate-600 transition-colors"
+        >
+          Privacy Policy
+        </button>
+      </div>
     </div>
   );
 };

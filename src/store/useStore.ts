@@ -74,6 +74,10 @@ interface AppState {
   answerQuestion: (answerValue: unknown) => void;
   resetQuiz: () => void;
   improveConfidence: () => void;
+  
+  // UI State
+  isPrivacyOpen: boolean;
+  setPrivacyOpen: (isOpen: boolean) => void;
 }
 
 const emptyObservations = (): Record<InfluenceDimension, Observation[]> => {
@@ -199,6 +203,9 @@ const findNextAdaptiveQuestion = (pool: Question[], engineScores: EngineScores):
 };
 
 export const useStore = create<AppState>((set, get) => ({
+  isPrivacyOpen: false,
+  setPrivacyOpen: (isOpen) => set({ isPrivacyOpen: isOpen }),
+  
   selectedCategories: [],
   toggleCategory: (category) => set((state) => {
     if (state.selectedCategories.includes(category)) {
